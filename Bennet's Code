@@ -1,0 +1,24 @@
+# Bennett's code for Marine ENV group
+
+---
+title: "TARA Oceans Analysis -- STAMPS 2018"
+output: html_notebook
+---
+#Importing TARA Oceans 16S OTU dataset into R
+```{r}
+library(phyloseq)
+#path <- <INSERT PATH TO .tsv FILE HERE>
+#For example, mine is:
+#path <- "/Users/bennettkapili/Desktop/STAMPS/miTAG.taxonomic.profiles.release.tsv"
+  
+#Import the tab-delimited OTU table
+TARA_table <- read.csv(path, sep="\t")
+#Create otu_table object
+OTU <- otu_table(TARA_table[,8:length(colnames(TARA_table))], taxa_are_rows=TRUE)
+#Create taxonomy table object
+TAX <- tax_table(as.matrix(TARA_table[,2:6]))
+#Import reference sequences
+#refseqs <- readDNAStringSet("/Users/bennettkapili/Downloads/TARA_Oceans_OTU_16S_seqs.fasta", format="fasta")
+#Merge into a phyloseq object
+psTARA <- phyloseq(OTU,TAX)
+```
